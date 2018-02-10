@@ -1,0 +1,55 @@
+{
+  "name": "@microbusiness/printer-react-native",
+  "version": "0.0.1",
+  "description": "Micro Business Printer React Native",
+  "main": "./src/index.js",
+  "scripts": {
+    "lint": "eslint --ext .jsx --ext .js src",
+    "fixlint": "eslint --fix --ext .jsx --ext .js src",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "flow": "flow",
+    "precommit": "lint-staged"
+  },
+  "author": "Micro Business ltd<micro.business.ltd@gmail.com>",
+  "homepage": "https://bitbucket.org/microbusiness/micro-business-printer-react-native#readme",
+  "dependencies": {
+    "immutable": "^4.0.0-rc.9",
+    "react-native-tcp": "^3.3.0",
+    "redux-saga": "^0.16.0",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.2.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.7.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "^7.6.1",
+    "flow-bin": "^0.65.0",
+    "husky": "^0.14.3",
+    "jest": "^22.2.1",
+    "lint-staged": "^6.1.0",
+    "prettier": "^1.10.2"
+  },
+  "jest": {
+    "rootDir": "./src"
+  },
+  "pre-commit": "lint:staged",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org:microbusiness/micro-business-printer-react-native.git"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,json,css}": [
+      "prettier --write --single-quote true --trailing-comma all --print-width 150",
+      "npm run fixlint",
+      "git add"
+    ]
+  }
+}
