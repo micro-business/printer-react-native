@@ -1,6 +1,6 @@
 {
   "name": "@microbusiness/printer-react-native",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Micro Business Printer React Native",
   "main": "./src/index.js",
   "scripts": {
@@ -17,7 +17,6 @@
     "immutable": "^4.0.0-rc.9",
     "react-native-tcp": "^3.3.0",
     "redux-saga": "^0.16.0",
-    "stream-browserify": "^2.0.1",
     "uuid": "^3.2.1"
   },
   "devDependencies": {
