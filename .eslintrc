@@ -1,29 +1,52 @@
 {
   "parser": "babel-eslint",
+  "env": {
+    "jest/globals": true
+  },
   "plugins": [
+    "react",
+    "react-native",
+    "flowtype",
     "import",
     "jest"
   ],
-  "extends": ["airbnb"],
+  "extends": ["airbnb", "eslint:recommended", "plugin:react/recommended"],
   "rules": {
-    "indent": [2, 2],
-    "linebreak-style": [0],
-    "import/no-unresolved": [2, {
-      "commonjs": true
+    "comma-dangle": [2, "always-multiline"],
+    "quotes": [2, "single", {
+      "allowTemplateLiterals": true
     }],
-    "import/named": 2,
-    "import/default": 2,
-    "import/namespace": 2,
-    "import/export": 2,
-    "react/prefer-stateless-function": 0,
+    "react/prop-types": 0,
+    "react/jsx-no-bind": 1,
+    "react/display-name": 0,
+    "react/prefer-stateless-function": 1,
     "react/jsx-indent": [2, 2],
     "react/jsx-indent-props": [2, 2],
     "react/jsx-filename-extension": [1, {
       "extensions": [".js", ".jsx"]
     }],
     "react/no-unused-prop-types": 0,
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 1,
+    "react-native/no-color-literals": 0,
+    "new-cap": 0,
+    "no-class-assign": 1,
+    "object-curly-spacing": [1, "always"],
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
+    "indent": [2, 2],
+    "linebreak-style": [0],
+    "import/no-unresolved": [2, {
+      "commonjs": true
+    }],
+    "import/first": 2,
+    "import/named": 2,
+    "import/default": 2,
+    "import/namespace": 2,
+    "import/export": 2,
     "max-len": ["warn", 150],
-    "no-console": 0,
+    "no-console": 1,
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": ["warn", {
       "aspects": ["invalidHref"]
@@ -48,7 +71,4 @@
       ]
     }
   },
-  "env": {
-    "jest/globals": true
-  }
 }
