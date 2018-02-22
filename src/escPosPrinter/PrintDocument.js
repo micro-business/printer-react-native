@@ -8,7 +8,10 @@ import * as Actions from './Actions';
 const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
   new Promise((resolve, reject) => {
     const socket = net.createConnection(port, hostname, () => {
-      if (socket.write(documentContent)) {
+      const resetCommand = String.fromCharCode(0x1b) + '@\r\n';
+      const feedPaperAndCutCommand = String.fromCharCode(0x1d) + 'VA\r\n';
+
+      if (socket.write(resetCommand + documentContent + feedPaperAndCutCommand)) {
         socket.destroy();
       }
     });
@@ -21,7 +24,7 @@ const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
       resolve();
     });
 
-    socket.on('error', (error) => {
+    socket.on('error', error => {
       reject(error);
     });
   });
