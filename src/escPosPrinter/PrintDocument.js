@@ -9,9 +9,10 @@ const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
   new Promise((resolve, reject) => {
     const socket = net.createConnection(port, hostname, () => {
       const resetCommand = String.fromCharCode(0x1b) + '@\r\n';
+      const characterSetCommand = String.fromCharCode(0x1b) + 'R' + String.fromCharCode(0x00) + '\r\n';
       const feedPaperAndCutCommand = String.fromCharCode(0x1d) + 'VA\r\n';
 
-      if (socket.write(resetCommand + documentContent + feedPaperAndCutCommand)) {
+      if (socket.write(resetCommand + characterSetCommand + documentContent + feedPaperAndCutCommand)) {
         socket.destroy();
       }
     });
