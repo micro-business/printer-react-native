@@ -1,6 +1,6 @@
 {
   "name": "@microbusiness/printer-react-native",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Micro Business Printer React Native",
   "main": "./src/index.js",
   "scripts": {
@@ -13,11 +13,11 @@
   },
   "author": "Micro Business ltd<micro.business.ltd@gmail.com>",
   "homepage": "https://bitbucket.org/microbusiness/micro-business-printer-react-native#readme",
-  "dependencies": {
-    "immutable": "^4.0.0-rc.9",
-    "react-native-tcp": "^3.3.0",
-    "redux-saga": "^0.16.0",
-    "uuid": "^3.2.1"
+  "peerDependencies": {
+    "immutable": "^4.x",
+    "react-native-tcp": "^3.x",
+    "redux-saga": "^0.x",
+    "uuid": "^3.x"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,15 +29,19 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-jest": "^21.12.2",
+    "eslint-plugin-jest": "^21.14.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "eslint-plugin-react-native": "^3.2.1",
-    "flow-bin": "^0.66.0",
+    "flow-bin": "^0.67.1",
     "husky": "^0.14.3",
+    "immutable": "^4.0.0-rc.9",
     "jest": "^22.4.2",
     "lint-staged": "^7.0.0",
-    "prettier": "^1.11.1"
+    "prettier": "^1.11.1",
+    "react-native-tcp": "^3.3.0",
+    "redux-saga": "^0.16.0",
+    "uuid": "^3.2.1"
   },
   "jest": {
     "rootDir": "./src"
