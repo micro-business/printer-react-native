@@ -1,5 +1,7 @@
 // @flow
 
+import { Range } from 'immutable';
+import BluebirdPromise from 'bluebird';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import net from 'react-native-tcp';
 import ActionTypes from './ActionTypes';
@@ -30,10 +32,24 @@ const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
     });
   });
 
+const print = async (hostname, port, documentContent, numberOfCopies) => {
+  await BluebirdPromise.each(
+    Range(0, numberOfCopies ? numberOfCopies : 1)
+      .map(() => connectAndSendDocumentToPrinter(hostname, port, documentContent))
+      .toArray(),
+  );
+};
+
 function* printDocumentAsync(action) {
   try {
     yield put(Actions.printDocumentInProgress(action.payload));
-    yield call(connectAndSendDocumentToPrinter, action.payload.get('hostname'), action.payload.get('port'), action.payload.get('documentContent'));
+    yield call(
+      print,
+      action.payload.get('hostname'),
+      action.payload.get('port'),
+      action.payload.get('documentContent'),
+      action.payload.get('numberOfCopies'),
+    );
     yield put(Actions.printDocumentSucceeded(action.payload));
   } catch (exception) {
     yield put(Actions.printDocumentFailed(action.payload.set('errorMessage', exception.message)));
