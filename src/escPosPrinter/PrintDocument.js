@@ -32,13 +32,12 @@ const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
     });
   });
 
-const print = async (hostname, port, documentContent, numberOfCopies) => {
-  await BluebirdPromise.each(
+const print = async (hostname, port, documentContent, numberOfCopies) =>
+  BluebirdPromise.each(
     Range(0, numberOfCopies ? numberOfCopies : 1)
       .map(() => connectAndSendDocumentToPrinter(hostname, port, documentContent))
       .toArray(),
   );
-};
 
 function* printDocumentAsync(action) {
   try {
