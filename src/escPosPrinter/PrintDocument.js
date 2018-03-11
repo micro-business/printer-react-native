@@ -33,10 +33,8 @@ const connectAndSendDocumentToPrinter = (hostname, port, documentContent) =>
   });
 
 const print = async (hostname, port, documentContent, numberOfCopies) =>
-  BluebirdPromise.each(
-    Range(0, numberOfCopies ? numberOfCopies : 1)
-      .map(() => connectAndSendDocumentToPrinter(hostname, port, documentContent))
-      .toArray(),
+  BluebirdPromise.each(Range(0, numberOfCopies ? numberOfCopies : 1).toArray(), () =>
+    connectAndSendDocumentToPrinter(hostname, port, documentContent),
   );
 
 function* printDocumentAsync(action) {
