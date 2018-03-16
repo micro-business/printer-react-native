@@ -1,6 +1,6 @@
 // @flow
 
-import uuid from 'uuid/v4';
+import cuid from 'cuid';
 import ActionTypes from './ActionTypes';
 
 export function acknowledgeFailedOperation(payload) {
@@ -13,7 +13,7 @@ export function acknowledgeFailedOperation(payload) {
 export function printDocument(payload) {
   return {
     type: ActionTypes.ESC_POS_PRINTER_PRINT_DOCUMENT,
-    payload: payload.set('operationId', uuid()),
+    payload: payload.set('operationId', cuid()),
   };
 }
 
