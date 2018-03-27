@@ -8,6 +8,7 @@
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
     "test:watch": "jest --watch",
+    "publish-package": "npm publish",
     "flow": "flow",
     "precommit": "lint-staged"
   },
@@ -29,7 +30,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native-stage-0": "^1.0.1",
     "cuid": "^2.1.0",
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-flowtype": "^2.46.1",
     "eslint-plugin-import": "^2.9.0",
