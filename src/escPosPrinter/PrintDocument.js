@@ -1,6 +1,6 @@
 // @flow
 
-import { Range } from 'immutable';
+import { Map, Range } from 'immutable';
 import BluebirdPromise from 'bluebird';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import net from 'react-native-tcp';
