@@ -68,7 +68,6 @@ const internationalCharacterSet = Map()
   .set('es_VE', 0x07)
   .set('ja', 0x08)
   .set('ja_JP', 0x08)
-  .set('jp', 0x08) // TODO: this must be removed once we fix the error where using 'jp' as japanese language code
   .set('nb', 0x09)
   .set('nb_NO', 0x09)
   .set('nn', 0x09)
