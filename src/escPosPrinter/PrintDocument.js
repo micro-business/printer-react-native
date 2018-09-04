@@ -30,8 +30,21 @@ const connectAndSendDocumentToPrinter = (hostname, port, buffer) =>
   });
 
 const print = async (hostname, port, documentContent, numberOfCopies) => {
+  var finalDocumentContent = documentContent;
+  var indexOfCommandCode = finalDocumentContent.indexOf('##');
+
+  while (indexOfCommandCode !== -1) {
+    const part1 = finalDocumentContent.substring(0, indexOfCommandCode);
+    const part2 = finalDocumentContent.substring(indexOfCommandCode + 4);
+    const commandCode = finalDocumentContent.substring(indexOfCommandCode + 2, indexOfCommandCode + 4);
+
+    finalDocumentContent = part1 + parseInt('0x' + commandCode) + part2;
+
+    indexOfCommandCode = finalDocumentContent.indexOf('##');
+  }
+
   const resetCommandBuffer = Buffer.from('\x1B@\x00');
-  const documentContentBuffer = iconv.encode(documentContent, 'cp936');
+  const documentContentBuffer = iconv.encode(finalDocumentContent, 'cp936');
   const feedPaperAndCutCommandBuffer = Buffer.from('\x1DVA\x02');
   const bufferToPrint = Buffer.concat([resetCommandBuffer, documentContentBuffer, feedPaperAndCutCommandBuffer]);
 
