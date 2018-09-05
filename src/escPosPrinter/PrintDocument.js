@@ -38,7 +38,7 @@ const print = async (hostname, port, documentContent, numberOfCopies) => {
     const part2 = finalDocumentContent.substring(indexOfCommandCode + 4);
     const commandCode = finalDocumentContent.substring(indexOfCommandCode + 2, indexOfCommandCode + 4);
 
-    finalDocumentContent = part1 + parseInt('0x' + commandCode) + part2;
+    finalDocumentContent = part1 + String.fromCharCode(parseInt('0x' + commandCode)) + part2;
 
     indexOfCommandCode = finalDocumentContent.indexOf('##');
   }
