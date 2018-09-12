@@ -1,6 +1,5 @@
 // @flow
 
-import { Range } from 'immutable';
 import BluebirdPromise from 'bluebird';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import net from 'react-native-tcp';
@@ -29,40 +28,37 @@ const connectAndSendDocumentToPrinter = (hostname, port, buffer) =>
     });
   });
 
-const print = async (hostname, port, documentContent, numberOfCopies) => {
-  var finalDocumentContent = documentContent;
-  var indexOfCommandCode = finalDocumentContent.indexOf('##');
+const print = async documents =>
+  BluebirdPromise.each(documents.toArray(), document => {
+    const hostname = document.get('hostname');
+    const port = document.get('port');
+    const content = document.get('content');
 
-  while (indexOfCommandCode !== -1) {
-    const part1 = finalDocumentContent.substring(0, indexOfCommandCode);
-    const part2 = finalDocumentContent.substring(indexOfCommandCode + 4);
-    const commandCode = finalDocumentContent.substring(indexOfCommandCode + 2, indexOfCommandCode + 4);
+    var finalContent = content;
+    var indexOfCommandCode = finalContent.indexOf('##');
 
-    finalDocumentContent = part1 + String.fromCharCode(parseInt('0x' + commandCode)) + part2;
+    while (indexOfCommandCode !== -1) {
+      const part1 = finalContent.substring(0, indexOfCommandCode);
+      const part2 = finalContent.substring(indexOfCommandCode + 4);
+      const commandCode = finalContent.substring(indexOfCommandCode + 2, indexOfCommandCode + 4);
 
-    indexOfCommandCode = finalDocumentContent.indexOf('##');
-  }
+      finalContent = part1 + String.fromCharCode(parseInt('0x' + commandCode)) + part2;
 
-  const resetCommandBuffer = Buffer.from('\x1B@\x00');
-  const documentContentBuffer = iconv.encode(finalDocumentContent, 'cp936');
-  const feedPaperAndCutCommandBuffer = Buffer.from('\x1DVA\x02');
-  const bufferToPrint = Buffer.concat([resetCommandBuffer, documentContentBuffer, feedPaperAndCutCommandBuffer]);
+      indexOfCommandCode = finalContent.indexOf('##');
+    }
 
-  return BluebirdPromise.each(Range(0, numberOfCopies ? numberOfCopies : 1).toArray(), () =>
-    connectAndSendDocumentToPrinter(hostname, port, bufferToPrint),
-  );
-};
+    const resetCommandBuffer = Buffer.from('\x1B@\x00');
+    const documentContentBuffer = iconv.encode(finalContent, 'cp936');
+    const feedPaperAndCutCommandBuffer = Buffer.from('\x1DVA\x02');
+    const bufferToPrint = Buffer.concat([resetCommandBuffer, documentContentBuffer, feedPaperAndCutCommandBuffer]);
+
+    return connectAndSendDocumentToPrinter(hostname, port, bufferToPrint);
+  });
 
 function* printDocumentAsync(action) {
   try {
     yield put(Actions.printDocumentInProgress(action.payload));
-    yield call(
-      print,
-      action.payload.get('hostname'),
-      action.payload.get('port'),
-      action.payload.get('documentContent'),
-      action.payload.get('numberOfCopies'),
-    );
+    yield call(print, action.payload.get('documents'));
     yield put(Actions.printDocumentSucceeded(action.payload));
   } catch (exception) {
     yield put(Actions.printDocumentFailed(action.payload.set('errorMessage', exception.message)));
